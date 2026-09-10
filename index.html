@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Juturi Vaishnavi - Computer Science Engineering Student Portfolio">
+<title>Juturi Vaishnavi | 3D Portfolio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Orbitron:wght@500;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box;scroll-behavior:smooth}
+:root{
+ --bg:#030611;--bg2:#071127;--card:rgba(12,20,45,.68);--text:#f6f8ff;
+ --muted:#a9b4cf;--cyan:#00e5ff;--purple:#8b5cf6;--pink:#ec4899;
+ --line:rgba(255,255,255,.12);--shadow:0 25px 80px rgba(0,0,0,.35);
+}
+body{font-family:Inter,sans-serif;background:radial-gradient(circle at 20% 10%,#101b45 0,transparent 32%),var(--bg);color:var(--text);overflow-x:hidden;line-height:1.6}
+body:before{content:"";position:fixed;inset:0;pointer-events:none;z-index:20;background:radial-gradient(circle at 50% -10%,rgba(0,229,255,.10),transparent 40%)}
+#space{position:fixed;inset:0;width:100%;height:100%;z-index:-5}
+.grid-bg{position:fixed;inset:0;z-index:-4;opacity:.16;pointer-events:none;background-image:linear-gradient(rgba(0,229,255,.08) 1px,transparent 1px),linear-gradient(90deg,rgba(0,229,255,.08) 1px,transparent 1px);background-size:60px 60px;transform:perspective(600px) rotateX(60deg) scale(1.8) translateY(28%);transform-origin:center bottom}
+.blob{position:fixed;width:420px;height:420px;border-radius:50%;filter:blur(130px);opacity:.16;z-index:-3;pointer-events:none}
+.blob.one{background:var(--purple);left:-180px;top:-140px}.blob.two{background:var(--cyan);right:-180px;bottom:-150px}
+
+nav{position:fixed;top:16px;left:50%;transform:translateX(-50%);width:min(1160px,calc(100% - 28px));z-index:1000;padding:12px 16px;border:1px solid var(--line);border-radius:22px;background:rgba(3,7,20,.62);backdrop-filter:blur(18px);display:flex;align-items:center;justify-content:space-between;box-shadow:0 15px 50px rgba(0,0,0,.25)}
+.logo{font-family:Orbitron;font-weight:800;color:var(--cyan);letter-spacing:.08em}.logo span{color:#fff}
+.nav-links{display:flex;gap:6px;list-style:none}.nav-links a{color:#c8d1e8;text-decoration:none;font-size:13px;padding:9px 11px;border-radius:10px;transition:.3s}.nav-links a:hover{color:var(--cyan);background:rgba(0,229,255,.08)}
+.menu{display:none;font-size:27px;cursor:pointer}
+
+section{padding:115px 7%;position:relative}
+.hero{min-height:100vh;display:grid;place-items:center;padding-top:130px}
+.hero-wrap{width:min(1180px,100%);display:grid;grid-template-columns:1.1fr .9fr;gap:70px;align-items:center}
+.eyebrow{display:inline-flex;padding:9px 15px;border:1px solid rgba(0,229,255,.35);border-radius:30px;color:var(--cyan);background:rgba(0,229,255,.05);font-size:12px;letter-spacing:.08em;box-shadow:0 0 30px rgba(0,229,255,.08);animation:pulse 2.5s infinite}
+@keyframes pulse{50%{box-shadow:0 0 35px rgba(0,229,255,.2)}}
+.hero h1{font-family:Orbitron;font-size:clamp(45px,7vw,88px);line-height:1.02;margin:22px 0 15px;letter-spacing:-.04em}
+.gradient{background:linear-gradient(90deg,var(--cyan),var(--purple),var(--pink),var(--cyan));background-size:300%;-webkit-background-clip:text;background-clip:text;color:transparent;animation:gradient 5s linear infinite}
+@keyframes gradient{to{background-position:300%}}
+.typing{font-size:clamp(20px,3vw,31px);color:var(--muted);margin-bottom:20px}.typing b{color:var(--cyan)}.cursor{color:var(--cyan);animation:blink .7s infinite}@keyframes blink{50%{opacity:0}}
+.hero p{max-width:700px;color:var(--muted);font-size:16px;line-height:1.9}
+.buttons{display:flex;gap:14px;flex-wrap:wrap;margin-top:30px}.btn{padding:13px 22px;border-radius:12px;text-decoration:none;font-weight:700;transition:.35s;display:inline-block}
+.primary{background:var(--cyan);color:#001116;box-shadow:0 0 30px rgba(0,229,255,.22)}.primary:hover{transform:translateY(-5px) scale(1.03);box-shadow:0 0 45px rgba(0,229,255,.5)}
+.secondary{border:1px solid var(--line);color:#fff;background:rgba(255,255,255,.035)}.secondary:hover{border-color:var(--cyan);transform:translateY(-5px)}
+
+.profile-scene{height:500px;display:grid;place-items:center;perspective:1200px;position:relative}
+.profile-orbit{position:absolute;width:380px;height:380px;border:1px solid rgba(0,229,255,.32);border-radius:50%;transform:rotateX(65deg) rotateZ(12deg);animation:orbit 8s linear infinite;box-shadow:0 0 30px rgba(0,229,255,.06)}
+.profile-orbit:nth-child(2){width:330px;height:330px;border-color:rgba(139,92,246,.35);transform:rotateY(68deg) rotateZ(-20deg);animation-duration:11s;animation-direction:reverse}
+.profile-orbit:nth-child(3){width:430px;height:430px;border-color:rgba(236,72,153,.22);transform:rotateX(72deg) rotateZ(65deg);animation-duration:14s}
+@keyframes orbit{to{transform:rotateX(65deg) rotateZ(372deg)}}
+.profile-card{position:relative;width:300px;height:390px;transform-style:preserve-3d;animation:float3d 5s ease-in-out infinite;filter:drop-shadow(0 30px 35px rgba(0,0,0,.4))}
+@keyframes float3d{0%,100%{transform:translateY(0) rotateY(-6deg) rotateX(2deg)}50%{transform:translateY(-18px) rotateY(7deg) rotateX(-2deg)}}
+.profile-frame{position:absolute;inset:0;border-radius:35px;padding:7px;background:linear-gradient(135deg,var(--cyan),var(--purple),var(--pink));transform:translateZ(20px)}
+.profile-inner{width:100%;height:100%;border-radius:30px;overflow:hidden;background:#081027;border:1px solid rgba(255,255,255,.2);position:relative}
+.profile-inner img{width:100%;height:100%;object-fit:cover;display:block}
+.profile-inner:after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 50%,rgba(0,0,0,.35));pointer-events:none}
+.holo{position:absolute;bottom:-24px;left:50%;transform:translateX(-50%) translateZ(55px);padding:10px 18px;border:1px solid rgba(0,229,255,.35);background:rgba(2,10,25,.78);backdrop-filter:blur(12px);border-radius:14px;white-space:nowrap;color:var(--cyan);font-family:Orbitron;font-size:11px;letter-spacing:.08em;box-shadow:0 0 25px rgba(0,229,255,.15)}
+
+.section-title{text-align:center;margin-bottom:55px}.section-title h2{font-family:Orbitron;font-size:clamp(28px,5vw,45px)}.section-title span{color:var(--cyan)}.section-title p{color:var(--muted);margin-top:8px}
+.container{max-width:1120px;margin:auto}
+.card{background:var(--card);border:1px solid var(--line);border-radius:22px;padding:30px;backdrop-filter:blur(18px);box-shadow:var(--shadow);transition:.45s;transform-style:preserve-3d}
+.card:hover{transform:translateY(-10px) rotateX(2deg) rotateY(-2deg);border-color:rgba(0,229,255,.38)}
+.about-text{color:var(--muted);line-height:1.95;font-size:16px}.about-text strong{color:#fff}
+
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:20px}
+.skill-card{min-height:210px}.icon3d{font-size:38px;margin-bottom:15px;display:inline-block;animation:iconFloat 3s ease-in-out infinite}@keyframes iconFloat{50%{transform:translateY(-7px) rotateY(180deg)}}
+.card h3{margin-bottom:10px}.card p{color:var(--muted);font-size:14px;line-height:1.75}
+
+.project-card{min-height:360px;position:relative;overflow:hidden}.project-card:before{content:"";position:absolute;width:180px;height:180px;border-radius:50%;right:-90px;top:-90px;background:var(--cyan);filter:blur(80px);opacity:.1;transition:.5s}.project-card:hover:before{opacity:.28}
+.number{font-family:Orbitron;color:var(--cyan);font-size:11px;margin-bottom:20px}.tags{margin-top:22px}.tag{display:inline-block;padding:6px 10px;margin:3px;border:1px solid rgba(0,229,255,.22);border-radius:20px;color:var(--cyan);font-size:10px;background:rgba(0,229,255,.05)}
+
+.timeline{max-width:900px;margin:auto;position:relative}.timeline:before{content:"";position:absolute;left:20px;top:0;bottom:0;width:2px;background:linear-gradient(var(--cyan),var(--purple))}
+.timeline-item{position:relative;padding-left:65px;margin-bottom:30px}.dot{position:absolute;left:11px;top:26px;width:20px;height:20px;border-radius:50%;background:var(--cyan);box-shadow:0 0 22px var(--cyan)}
+
+.cert{text-align:center}.cert-icon{font-size:40px;margin-bottom:12px}.strengths{display:flex;justify-content:center;flex-wrap:wrap;gap:12px}.strength{padding:11px 17px;border:1px solid var(--line);border-radius:30px;color:var(--muted);background:rgba(255,255,255,.03);transition:.3s}.strength:hover{color:var(--cyan);border-color:var(--cyan);transform:translateY(-4px)}
+
+.contact-box{text-align:center;max-width:900px;margin:auto}.contact-links{display:flex;justify-content:center;gap:12px;flex-wrap:wrap;margin-top:25px}
+footer{text-align:center;padding:32px;border-top:1px solid var(--line);color:var(--muted);font-size:13px}footer span{color:var(--cyan)}
+
+.reveal{opacity:0;transform:translateY(50px) scale(.98);transition:1s cubic-bezier(.2,.8,.2,1)}.reveal.show{opacity:1;transform:none}
+#topBtn{position:fixed;right:22px;bottom:22px;width:46px;height:46px;border:1px solid rgba(0,229,255,.35);border-radius:50%;background:rgba(0,229,255,.9);color:#001116;font-size:20px;cursor:pointer;display:none;z-index:999}
+
+@media(max-width:850px){
+ .hero-wrap{grid-template-columns:1fr;text-align:center;gap:20px}.hero p{margin:auto}.buttons{justify-content:center}.profile-scene{height:430px}
+ .nav-links{display:none;position:absolute;right:0;top:62px;width:230px;flex-direction:column;background:rgba(3,7,20,.96);padding:18px;border:1px solid var(--line);border-radius:18px}.nav-links.active{display:flex}.menu{display:block}
+}
+@media(max-width:520px){
+ section{padding:85px 5%}.hero{padding-top:120px}.profile-card{width:235px;height:310px}.profile-orbit{width:300px;height:300px}.profile-orbit:nth-child(2){width:260px;height:260px}.profile-orbit:nth-child(3){width:335px;height:335px}
+ .profile-scene{height:370px}.timeline:before{left:10px}.timeline-item{padding-left:40px}.dot{left:1px}
+}
+@media(prefers-reduced-motion:reduce){*,*:before,*:after{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
+</style>
+</head>
+
+<body>
+<canvas id="space"></canvas>
+<div class="grid-bg"></div><div class="blob one"></div><div class="blob two"></div>
+
+<nav>
+ <div class="logo">JV<span>.</span></div>
+ <ul class="nav-links" id="navLinks">
+  <li><a href="#home">Home</a></li><li><a href="#about">About</a></li><li><a href="#skills">Skills</a></li>
+  <li><a href="#projects">Projects</a></li><li><a href="#education">Education</a></li><li><a href="#contact">Contact</a></li>
+ </ul>
+ <div class="menu" onclick="toggleMenu()">☰</div>
+</nav>
+
+<section class="hero" id="home">
+ <div class="hero-wrap">
+  <div class="reveal">
+   <div class="eyebrow">AVAILABLE FOR SOFTWARE ENGINEERING OPPORTUNITIES</div>
+   <h1>JUTURI<br><span class="gradient">VAISHNAVI</span></h1>
+   <div class="typing">I'm a <b id="typingText"></b><span class="cursor">|</span></div>
+   <p>Computer Science Engineering student with a strong foundation in Java, Python, SQL, web development, Object-Oriented Programming, DBMS and Data Structures &amp; Algorithms.</p>
+   <div class="buttons"><a class="btn primary" href="#projects">View My Work →</a><a class="btn secondary" href="#contact">Contact Me</a></div>
+  </div>
+
+  <div class="profile-scene reveal" id="tiltScene">
+   <div class="profile-orbit"></div><div class="profile-orbit"></div><div class="profile-orbit"></div>
+   <div class="profile-card" id="profileCard">
+    <div class="profile-frame"><div class="profile-inner">
+      <!-- Put your resume/profile photo in the same folder and name it profile.jpg -->
+      <img src="profile.jpg" alt="Juturi Vaishnavi profile photo">
+    </div></div>
+    <div class="holo">JUTURI VAISHNAVI • CSE</div>
+   </div>
+  </div>
+ </div>
+</section>
+
+<section id="about">
+ <div class="section-title reveal"><h2>About <span>Me</span></h2><p>Turning ideas into software solutions</p></div>
+ <div class="container">
+  <div class="card reveal">
+   <p class="about-text">I am a Computer Science Engineering student at <strong>Dhanekula Institute of Engineering and Technology</strong>, passionate about software development and technology. I enjoy building web-based and database-driven applications and continuously improving my programming and problem-solving skills.</p><br>
+   <p class="about-text">My technical interests include Full Stack Development, Java/Python development, databases, Object-Oriented Programming, Data Structures &amp; Algorithms and decentralized application development.</p>
+  </div>
+ </div>
+</section>
+
+<section id="skills">
+ <div class="section-title reveal"><h2>Technical <span>Skills</span></h2><p>Technologies and concepts I work with</p></div>
+ <div class="container grid">
+  <div class="card skill-card reveal"><div class="icon3d">☕</div><h3>Programming</h3><p>Java, Python and SQL with strong programming fundamentals.</p></div>
+  <div class="card skill-card reveal"><div class="icon3d">🌐</div><h3>Web Development</h3><p>HTML5, CSS3, JavaScript and Responsive Web Design.</p></div>
+  <div class="card skill-card reveal"><div class="icon3d">🧠</div><h3>Core CS</h3><p>OOP, Data Structures &amp; Algorithms, DBMS and Problem Solving.</p></div>
+  <div class="card skill-card reveal"><div class="icon3d">🗄️</div><h3>Databases</h3><p>SQL, relational database concepts, database design and CRUD.</p></div>
+  <div class="card skill-card reveal"><div class="icon3d">⚙️</div><h3>Development</h3><p>Front-end development, REST API fundamentals and client-server architecture.</p></div>
+  <div class="card skill-card reveal"><div class="icon3d">🔧</div><h3>Tools</h3><p>Git, GitHub, version control, debugging and SDLC fundamentals.</p></div>
+ </div>
+</section>
+
+<section id="projects">
+ <div class="section-title reveal"><h2>Featured <span>Projects</span></h2><p>Things I have built and explored</p></div>
+ <div class="container grid">
+  <div class="card project-card reveal"><div class="number">01 / FULL STACK</div><h3>E-Commerce Web Application</h3><p>Developed a responsive e-commerce web application implementing product browsing, search, shopping cart management and checkout workflows.</p><div class="tags"><span class="tag">HTML5</span><span class="tag">CSS3</span><span class="tag">JavaScript</span><span class="tag">Java/Python</span><span class="tag">SQL</span></div></div>
+  <div class="card project-card reveal"><div class="number">02 / JAVA + SQL</div><h3>Student Management System</h3><p>Developed a Java-based student management system supporting registration, record updates, search, deletion and academic information management.</p><div class="tags"><span class="tag">Java</span><span class="tag">SQL</span><span class="tag">OOP</span><span class="tag">DBMS</span></div></div>
+  <div class="card project-card reveal"><div class="number">03 / BLOCKCHAIN</div><h3>Hedera-Based DApp</h3><p>Designed a blockchain-oriented application using Hedera Hashgraph fundamentals to demonstrate decentralized transaction processing and distributed-ledger concepts.</p><div class="tags"><span class="tag">Hedera</span><span class="tag">Hashgraph</span><span class="tag">JavaScript</span><span class="tag">HTML5</span><span class="tag">CSS3</span></div></div>
+ </div>
+</section>
+
+<section id="education">
+ <div class="section-title reveal"><h2>My <span>Education</span></h2><p>Academic journey</p></div>
+ <div class="timeline">
+  <div class="timeline-item reveal"><div class="dot"></div><div class="card"><div class="number">EXPECTED 2028</div><h3>B.Tech — Computer Science Engineering</h3><p>Dhanekula Institute of Engineering and Technology</p><p>Vijayawada, India</p><br><strong>CGPA: 7.3 / 10</strong></div></div>
+ </div>
+</section>
+
+<section>
+ <div class="section-title reveal"><h2>Certifi<span>cations</span></h2><p>Learning beyond the classroom</p></div>
+ <div class="container grid">
+  <div class="card cert reveal"><div class="cert-icon">🏆</div><h3>Technical Certification</h3><p>Programming and software development learning.</p></div>
+  <div class="card cert reveal"><div class="cert-icon">💻</div><h3>Web Development</h3><p>HTML, CSS and JavaScript development skills.</p></div>
+  <div class="card cert reveal"><div class="cert-icon">🔗</div><h3>Blockchain</h3><p>Hedera and decentralized application fundamentals.</p></div>
+ </div>
+</section>
+
+<section>
+ <div class="section-title reveal"><h2>Personal <span>Strengths</span></h2></div>
+ <div class="strengths reveal">
+  <span class="strength">Problem Solving</span><span class="strength">Quick Learning</span><span class="strength">Team Work</span>
+  <span class="strength">Communication</span><span class="strength">Positive Attitude</span><span class="strength">Initiative</span>
+ </div>
+</section>
+
+<section id="contact">
+ <div class="section-title reveal"><h2>Let's <span>Connect</span></h2><p>Open to learning, collaboration and opportunities</p></div>
+ <div class="card contact-box reveal">
+  <h3>Juturi Vaishnavi</h3>
+  <p>Computer Science Engineering Student</p>
+  <div class="contact-links">
+   <a class="btn primary" href="mailto:your-email@example.com">Email Me</a>
+   <a class="btn secondary" href="https://www.linkedin.com/" target="_blank" rel="noopener">LinkedIn</a>
+   <a class="btn secondary" href="https://github.com/" target="_blank" rel="noopener">GitHub</a>
+  </div>
+ </div>
+</section>
+
+<footer>© <span id="year"></span> <span>Juturi Vaishnavi</span> · 3D Interactive Portfolio</footer>
+<button id="topBtn" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+
+<script>
+/* 3D starfield */
+const canvas=document.getElementById("space"),ctx=canvas.getContext("2d");
+let W,H,dpr,stars=[];
+function resize(){
+ dpr=Math.min(devicePixelRatio||1,2);W=innerWidth;H=innerHeight;
+ canvas.width=W*dpr;canvas.height=H*dpr;ctx.setTransform(dpr,0,0,dpr,0,0);
+ stars=Array.from({length:Math.min(300,Math.floor(W/3))},()=>({x:Math.random()*W,y:Math.random()*H,z:Math.random(),s:.3+Math.random()*1.8,v:.08+Math.random()*.35}));
+}
+addEventListener("resize",resize);resize();
+let mouse={x:innerWidth/2,y:innerHeight/2};
+addEventListener("pointermove",e=>{mouse.x=e.clientX;mouse.y=e.clientY});
+function animate(){
+ ctx.clearRect(0,0,W,H);
+ for(const p of stars){
+  p.y-=p.v;if(p.y<0){p.y=H;p.x=Math.random()*W}
+  const px=p.x+(mouse.x-W/2)*p.z*.012,py=p.y+(mouse.y-H/2)*p.z*.012;
+  ctx.beginPath();ctx.arc(px,py,p.s*(.4+p.z),0,Math.PI*2);
+  ctx.fillStyle=`rgba(150,225,255,${.12+p.z*.65})`;ctx.fill();
+ }
+ requestAnimationFrame(animate);
+}animate();
+
+/* Typing */
+const words=["Software Developer","Full Stack Learner","Java Developer","Python Programmer","Problem Solver"];
+let wi=0,ci=0,del=false;
+function type(){
+ const el=document.getElementById("typingText"),word=words[wi];
+ el.textContent=word.slice(0,ci);
+ if(!del&&ci<word.length)ci++;else if(del&&ci>0)ci--;else if(!del){del=true;setTimeout(type,1000);return}else{del=false;wi=(wi+1)%words.length}
+ setTimeout(type,del?45:85);
+}type();
+
+/* Scroll reveal */
+const observer=new IntersectionObserver(entries=>entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add("show")}),{threshold:.12});
+document.querySelectorAll(".reveal").forEach(el=>observer.observe(el));
+
+/* Mobile menu */
+function toggleMenu(){document.getElementById("navLinks").classList.toggle("active")}
+document.querySelectorAll(".nav-links a").forEach(a=>a.addEventListener("click",()=>document.getElementById("navLinks").classList.remove("active")));
+
+/* Interactive 3D profile tilt */
+const scene=document.getElementById("tiltScene"),card=document.getElementById("profileCard");
+scene.addEventListener("pointermove",e=>{
+ const r=scene.getBoundingClientRect(),x=(e.clientX-r.left)/r.width-.5,y=(e.clientY-r.top)/r.height-.5;
+ card.style.transform=`translateY(-6px) rotateY(${x*18}deg) rotateX(${-y*14}deg)`;
+});
+scene.addEventListener("pointerleave",()=>card.style.transform="");
+
+/* Back to top */
+const topBtn=document.getElementById("topBtn");
+addEventListener("scroll",()=>topBtn.style.display=scrollY>500?"block":"none");
+document.getElementById("year").textContent=new Date().getFullYear();
+</script>
+</body>
+</html>
